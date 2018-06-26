@@ -33,6 +33,9 @@ export class OauthCordova extends Oauth {
         const exitListener = () => reject(new Error(`The "${options.providerName}" sign in flow was canceled`));
 
         browserRef.addEventListener('loaderror', () => {
+          if(error.code === -999) {
+            return;
+          }
           browserRef.removeEventListener('exit', exitListener);
           browserRef.close();
           reject(new Error(`Error loading login page of "${options.providerName}"`));
